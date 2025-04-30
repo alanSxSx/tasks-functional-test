@@ -1,5 +1,7 @@
 package functionalTests;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
@@ -8,18 +10,23 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class TasksTest {
 	
-	public WebDriver acessarAplicacao() {
-		WebDriver driver = new ChromeDriver();
-		driver.navigate().to("http://localhost:8080/tasks");
+	public WebDriver acessarAplicacao() throws MalformedURLException {
+//		WebDriver driver = new ChromeDriver();
+		ChromeOptions cap = new ChromeOptions();
+		WebDriver driver = new RemoteWebDriver(new URL("http://192.168.1.6:4444/wd/hub"), cap);
+		driver.navigate().to("http://192.168.1.6:8080/tasks");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		return driver;
 	}
 	
 	@Test
-	public void deveSalvarTarefaComSucesso() {
+	public void deveSalvarTarefaComSucesso() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
 		driver.findElement(By.id("addTodo")).click();
@@ -34,7 +41,7 @@ public class TasksTest {
 	}
 	
 	@Test
-	public void deveApresentarMensagemDeErroInserindoDataPassada() {
+	public void deveApresentarMensagemDeErroInserindoDataPassada() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
 		driver.findElement(By.id("addTodo")).click();
@@ -49,7 +56,7 @@ public class TasksTest {
 	}
 	
 	@Test
-	public void deveApresentarMensagemDeErroAoSalvarSemDescricao() {
+	public void deveApresentarMensagemDeErroAoSalvarSemDescricao() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
 		driver.findElement(By.id("addTodo")).click();
@@ -63,7 +70,7 @@ public class TasksTest {
 	}
 	
 	@Test
-	public void deveApresentarMensagemDeErroAoSalvarSemData() {
+	public void deveApresentarMensagemDeErroAoSalvarSemData() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
 		driver.findElement(By.id("addTodo")).click();
