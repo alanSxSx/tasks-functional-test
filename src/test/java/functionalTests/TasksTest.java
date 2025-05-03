@@ -70,6 +70,25 @@ public class TasksTest {
 	}
 	
 	@Test
+	public void deveExcluirTarefaComSucesso() throws MalformedURLException {
+	    WebDriver driver = acessarAplicacao();
+	    try {
+	        driver.findElement(By.id("addTodo")).click();
+	        driver.findElement(By.id("task")).sendKeys("Tarefa para excluir");
+	        driver.findElement(By.id("dueDate")).sendKeys("30/08/2030");
+	        driver.findElement(By.id("saveButton")).click();
+	        String message = driver.findElement(By.id("message")).getText();
+	        Assert.assertEquals("Success!", message);
+	        driver.findElement(By.xpath("//table/tbody/tr[1]/td[3]/a")).click();
+	        String deleteMessage = driver.findElement(By.id("message")).getText();
+	        Assert.assertEquals("Success!", deleteMessage);
+
+	    } finally {
+	        driver.quit();
+	    }
+	}
+	
+	@Test
 	public void deveApresentarMensagemDeErroAoSalvarSemData() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
