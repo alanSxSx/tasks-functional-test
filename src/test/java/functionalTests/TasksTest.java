@@ -104,7 +104,7 @@ public class TasksTest {
 		WebDriver driver = acessarAplicacao();
 		try {
 		driver.findElement(By.id("addTodo")).click();
-		driver.findElement(By.id("dueDate")).sendKeys("01/01/2000");
+		driver.findElement(By.id("task")).sendKeys("Tarefa para excluir");
 		driver.findElement(By.id("saveButton")).click();
 		String message = driver.findElement(By.id("message")).getText();
 		Assert.assertEquals("Fill the task description", message);
