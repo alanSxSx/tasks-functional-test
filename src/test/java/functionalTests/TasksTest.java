@@ -107,7 +107,7 @@ public class TasksTest {
 		driver.findElement(By.id("task")).sendKeys("Tarefa para excluir");
 		driver.findElement(By.id("saveButton")).click();
 		String message = driver.findElement(By.id("message")).getText();
-		Assert.assertEquals("Fill the task description", message);
+		Assert.assertEquals("Fill the due date", message);
 		} finally {
 		driver.quit();
 		}
