@@ -34,7 +34,7 @@ public class TasksTest {
 		driver.findElement(By.id("dueDate")).sendKeys("30/08/2030");
 		driver.findElement(By.id("saveButton")).click();
 		String message = driver.findElement(By.id("message")).getText();
-		Assert.assertEquals("Success!", message);
+		Assert.assertEquals("Task saved successfully!", message);
 		} finally {
 		driver.quit();
 		}
@@ -78,10 +78,10 @@ public class TasksTest {
 	        driver.findElement(By.id("dueDate")).sendKeys("30/08/2030");
 	        driver.findElement(By.id("saveButton")).click();
 	        String message = driver.findElement(By.id("message")).getText();
-	        Assert.assertEquals("Success!", message);
+	        Assert.assertEquals("Task saved successfully!", message);
 	        driver.findElement(By.xpath("//table/tbody/tr[1]/td[3]/a")).click();
 	        String deleteMessage = driver.findElement(By.id("message")).getText();
-	        Assert.assertEquals("Success!", deleteMessage);
+	        Assert.assertEquals("Task deleted successfully!", deleteMessage);
 
 	    } finally {
 	        driver.quit();
