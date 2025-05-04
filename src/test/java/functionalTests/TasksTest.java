@@ -3,11 +3,14 @@ package functionalTests;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -25,13 +28,19 @@ public class TasksTest {
 		return driver;
 	}
 	
+	public static String formatDateToISO(String dateBr) {
+	    return LocalDate.parse(dateBr, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+	                    .format(DateTimeFormatter.ISO_LOCAL_DATE);
+	}
+	
 	@Test
 	public void deveSalvarTarefaComSucesso() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
 		driver.findElement(By.id("addTodo")).click();
 		driver.findElement(By.id("task")).sendKeys("Teste via Selenium");
-		driver.findElement(By.id("dueDate")).sendKeys("30/08/2030");
+		driver.findElement(By.id("dueDate")).click();
+		driver.findElement(By.id("dueDate")).sendKeys("02/08/2030");
 		driver.findElement(By.id("saveButton")).click();
 		String message = driver.findElement(By.id("message")).getText();
 		Assert.assertEquals("Task saved successfully!", message);
@@ -60,10 +69,11 @@ public class TasksTest {
 		WebDriver driver = acessarAplicacao();
 		try {
 		driver.findElement(By.id("addTodo")).click();
-		driver.findElement(By.id("task")).sendKeys("Teste via Selenium");
+		driver.findElement(By.id("dueDate")).click();
+		driver.findElement(By.id("dueDate")).sendKeys("02/08/2030");
 		driver.findElement(By.id("saveButton")).click();
 		String message = driver.findElement(By.id("message")).getText();
-		Assert.assertEquals("Fill the due date", message);
+		Assert.assertEquals("Fill the task description", message);
 		} finally {
 		driver.quit();
 		}
@@ -75,8 +85,9 @@ public class TasksTest {
 	    try {
 	        driver.findElement(By.id("addTodo")).click();
 	        driver.findElement(By.id("task")).sendKeys("Tarefa para excluir");
-	        driver.findElement(By.id("dueDate")).sendKeys("30/08/2030");
-	        driver.findElement(By.id("saveButton")).click();
+			driver.findElement(By.id("dueDate")).click();
+			driver.findElement(By.id("dueDate")).sendKeys("02/08/2030");
+			driver.findElement(By.id("saveButton")).click();
 	        String message = driver.findElement(By.id("message")).getText();
 	        Assert.assertEquals("Task saved successfully!", message);
 	        driver.findElement(By.xpath("//table/tbody/tr[1]/td[3]/a")).click();
